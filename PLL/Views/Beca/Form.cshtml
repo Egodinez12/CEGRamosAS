@@ -1,0 +1,48 @@
+﻿@model ML.Beca
+@{
+    ViewBag.Title = "Form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h2>Becas</h2>
+        <h5>Control de Becas :</h5>
+    </div>
+</div>
+</hr> <br /><br />
+
+@using (Html.BeginForm("Form", "Beca", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="row">
+        <div class="col-md-3" style="display: none;">
+            @Html.TextBoxFor(model => model.IdBeca, new { @class = "hidden form-control", autocomplete = "off" })
+        </div>
+        <div class="col-md-3">
+            @Html.LabelFor(model => model.NombreBeca)
+            <div class="input-group mb-3">
+                <span class="input-group-text"><i class="bi bi-rulers" style="color: midnightblue"></i></span>
+                @Html.TextBoxFor(model => model.NombreBeca, new { @class = "form-control", @id = "txtNombre", @placeholder="Ejemp: Beca Deportiva", autocomplete = "off", @onkeypress = "return SoloLetras(event)"})
+                @Html.ValidationMessageFor(model => model.NombreBeca, null, new { @class = "text-danger"})
+            </div>
+            @Html.Label("", null, new {@id = "lblNombreBeca"})
+        </div>
+        <div class="col-md-2">
+            @Html.LabelFor(model => model.MontoMensual)
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1"><i class="bi bi-currency-dollar" style="color: midnightblue"></i></span>
+                @Html.TextBoxFor(model => model.MontoMensual, new { @class = "form-control", @id = "txtApellidoPat", @placeholder="10000.00", @onkeypress = "return SoloLetras(event)"})
+                @Html.ValidationMessageFor(model => model.MontoMensual)
+            </div>
+            @Html.Label("", null, new {@id = "lblMontoMensual"})
+        </div>
+               
+       </div>
+        <div class="form-group">
+            <div class="col-md-3">
+                <input type="submit" value="Guardar" class="btn btn-success" />
+                @Html.ActionLink("Regresar", "GetAll", "Beca", htmlAttributes: new { @class = "btn btn-danger" })
+            </div>
+        </div>
+
+}

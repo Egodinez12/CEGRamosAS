@@ -1,0 +1,124 @@
+﻿@model ML.Alumno
+@{
+    ViewBag.Title = "Form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h2>Alumno</h2>
+        <h5>Ingrese los datos del Alumno:</h5>
+    </div>
+</div>
+</hr> <br /><br />
+
+@using (Html.BeginForm("Form", "Alumno", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="row">
+        <div class="col-md-3" style="display: none;">
+            @Html.TextBoxFor(model => model.IdAlumno, new { @class = "hidden form-control", autocomplete = "off" })
+        </div>
+        <div class="col-md-3">
+            @Html.LabelFor(model => model.Nombre)
+            <div class="input-group mb-3">
+                <span class="input-group-text"><i class="bi bi-rulers" style="color: midnightblue"></i></span>
+                @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", @id = "txtNombre", @placeholder="Ejemp: Historia", autocomplete = "off", @onkeypress = "return SoloLetras(event)"})
+                @Html.ValidationMessageFor(model => model.Nombre, null, new { @class = "text-danger"})
+            </div>
+            @Html.Label("", null, new {@id = "lblNombre"})
+        </div>
+        <div class="col-md-2">
+            @Html.LabelFor(model => model.ApellidoPat)
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1"><i class="bi bi-currency-dollar" style="color: midnightblue"></i></span>
+                @Html.TextBoxFor(model => model.ApellidoPat, new { @class = "form-control", @id = "txtApellidoPat", @placeholder="", @onkeypress = "return SoloLetras(event)"})
+                @Html.ValidationMessageFor(model => model.ApellidoPat)
+            </div>
+            @Html.Label("", null, new {@id = "lblApellidoPat"})
+        </div>
+        <div class="col-md-2">
+            @Html.LabelFor(model => model.ApellidoMat)
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1"><i class="bi bi-currency-dollar" style="color: midnightblue"></i></span>
+                @Html.TextBoxFor(model => model.ApellidoMat, new { @class = "form-control", @id = "txtApellidoPat", @placeholder="", @onkeypress = "return SoloLetras(event)"})
+                @Html.ValidationMessageFor(model => model.ApellidoMat)
+            </div>
+            @Html.Label("", null, new {@id = "lblApellidoMat"})
+        </div>
+
+        <div class="col-md-2">
+                                @Html.LabelFor(model => model.Sexo)
+                            <br/>
+                                Hombre
+                                @Html.RadioButtonFor(model => model.Sexo, "H")
+                                Mujer
+                                @Html.RadioButtonFor(model => model.Sexo, "M")
+                                @Html.ValidationMessageFor(model => model.Sexo, null, new { @class = "text-danger" })
+                            </div>
+
+        <div class="col-md-3">
+
+                        @Html.LabelFor(model=> model.Fotografia)
+
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-card-image"></i></span>
+                            <input id="IFImage" type='file' class="form-control" name="IFImage" onchange="validateFile(this), readURL(this);  " />
+                        </div>
+
+                        @if (Model.Fotografia != null)
+                        {
+                            <img id="Img" src="data:image/*;base64,@Model.Fotografia" style="width:100% ; height:auto" />
+                        }
+                        else
+                        {
+                            <img id="Img" src="~/image/sinfoto.jpg" style="width:100% ; height:auto" />
+                        }
+                    </div>
+                        @Html.HiddenFor(model => model.Fotografia)
+       </div>
+        <div class="form-group">
+            <div class="col-md-3">
+                <input type="submit" value="Guardar" class="btn btn-success" />
+                @Html.ActionLink("Regresar", "GetAll", "Alumno", htmlAttributes: new { @class = "btn btn-danger" })
+            </div>
+        </div>
+}
+
+@section Scripts{
+                <script src="~/lib/jquery/dist/jquery.js"></script>
+                <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+                <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+                <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+                <script type= "text/javascript">
+
+                     function validateFile(){
+                        var allowedExtension = ['jpeg', 'jpg', 'png'];
+                        var IFImage = document.getElementById('IFImage').value;
+                        var fileExtension = IFImage.split('.').pop().toLowerCase();
+                        var isValidFile = false;
+                        for(var index in allowedExtension) {
+                            if(fileExtension === allowedExtension[index]) {
+                                isValidFile = true;
+                                break;
+                            }
+                        }
+                        if(!isValidFile) {
+                            alert('Las extensiones permitidas son : *.' + allowedExtension.join(', *.'));
+                            IFImage = ""
+                        }
+                        return isValidFile;
+                    }
+                    function readURL(input) {
+                        if (input.files && input.files[0]) {
+                        var reader = new FileReader();
+                        reader.onload = function (e) {
+                            $('#Img')
+                            .attr('src', e.target.result);
+                            };
+                        reader.readAsDataURL(input.files[0]);
+                        }
+                    }
+
+ </script>
+
+}
