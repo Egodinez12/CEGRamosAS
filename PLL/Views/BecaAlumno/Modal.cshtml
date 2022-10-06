@@ -4,18 +4,18 @@
 <script src="http://bootboxjs.com/bootbox.js"></script>
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
-<div class="modal" tabindex="-1" role="dialog" id="Modal">
-  <div class="modal-dialog" role="document">
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Aviso</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Aviso</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
           <h5>@ViewBag.Message</h5>
       </div>
       <div class="modal-footer">
-          @Html.ActionLink("Vale", "GetAll", "Alumno", htmlAttributes: new { @class = "btn btn-danger" })
+          @Html.ActionLink("Vale", "GetAll", "BecaAlumno", htmlAttributes: new { @class = "btn btn-danger" })
       </div>
     </div>
   </div>
@@ -24,4 +24,3 @@
 <script>
     $('#Modal').modal();
 </script>
-

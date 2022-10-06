@@ -9,7 +9,7 @@ namespace SL.Controllers
         [Route("Api/Alumno/GetAll")]
         public IActionResult GetAll()
         {
-            ML.Alumno alumno = new ML.Alumno();
+            //ML.Alumno alumno = new ML.Alumno();
             var result = BL.Alumno.GetAllLINQ();
             if (result.Correct)
             {

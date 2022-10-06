@@ -1,0 +1,37 @@
+﻿@model ML.Usuario
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+    <link rel="stylesheet" href="~/Login/estilos.css" />
+    
+
+		@using(Html.BeginForm("Login","Login", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+		<div class="body"></div>
+		<div class="grad"></div>
+		<div class="header">
+			<div>Alfa<span>Solutions</span></div> <br>
+			
+		</div>
+		<br>
+		<div class="login">
+				
+				<div class="control-group">
+                        @*span class="input-group-text"><i class="bi bi-rulers" style="color: midnightblue"></i></span>*@
+							@Html.TextBoxFor(model => model.Username, new { @class = "form-control", @id = "txtEmail", @placeholder="Ejemplo@gmail.com"})                           
+                        </div><br>
+				<div class="control-group">
+						@*span class="input-group-text"><i class="bi bi-rulers" style="color: midnightblue"></i></span>*@
+							@Html.TextBoxFor(model => model.Clave, new { @class = "form-control", @id = "txtContrasenia", @placeholder="*********", @type="password"})                           
+                </div><br>
+				<div class="control-group">
+
+				<input type="submit" value="Enviar" class="btn btn-success"/>
+				</div>
+		</div>
+
+		}

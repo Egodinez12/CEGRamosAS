@@ -9,7 +9,6 @@ namespace DL
         public string? NombreMateria { get; set; }
         public byte? Creditos { get; set; }
         public int? IdSemestre { get; set; }
-        
 
         public virtual Semestre? IdSemestreNavigation { get; set; }
     }

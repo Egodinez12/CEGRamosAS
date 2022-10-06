@@ -14,10 +14,12 @@ namespace ML
         public string ApellidoMat { get; set; }
         public string Fotografia { get; set; }
         public bool Sexo { get; set; }
-        public int IdBeca { get; set; }        
+        public int IdBeca { get; set; }   
         public List<object> AlumnoList { get; set; }
 
         public ML.Beca Beca { get; set; }
+
+        
 
 
     }

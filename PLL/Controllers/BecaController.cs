@@ -147,31 +147,29 @@ namespace PLL.Controllers
         [HttpGet]
         public ActionResult Delete(ML.Beca beca)
         {
-
             ML.Result resultBeca = new ML.Result();
-            int idBeca = beca.IdBeca;
-            beca.IdBeca = idBeca;
-
+            int id = beca.IdBeca;
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://localhost:5105/Api/");
+                client.BaseAddress = new Uri(_configuration["WebAPI"]);
 
                 //HTTP POST
-                var postTask = client.DeleteAsync("Beca/Delete/" + idBeca);
+                var postTask = client.DeleteAsync("Api/Beca/delete/" + id);
                 postTask.Wait();
 
                 var result = postTask.Result;
                 if (result.IsSuccessStatusCode)
                 {
-                    ViewBag.Message = "El usuario ha sido eliminada";
-                }
-                else
-                {
-                    ViewBag.Message = "El usuario no pudo ser eliminado" + resultBeca.MessangeError;
+                    resultBeca = BL.Beca.GetAllLINQ();
+                    return RedirectToAction("GetAll", resultBeca);
                 }
             }
 
-            return PartialView("Modal");
+
+            resultBeca = BL.Beca.GetAllLINQ();
+
+            return View("GetAll", resultBeca);
+
 
         }
 

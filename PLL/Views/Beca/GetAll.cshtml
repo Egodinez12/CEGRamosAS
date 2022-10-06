@@ -6,32 +6,25 @@
 <div class="container">
     <div class="row">
         <div class="=col-md-12">
-            <h2>Control de Becas : </h2>
+            <h2>Lista de Becas: </h2>
         </div>
     </div>
-    <hr />
-
-    <div class="row">
-        <div class="col-md-6">
-            <h5></h5>
-        </div>
-    </div>
-    <br /> <br />
+     <hr />
     <div class="row">
         <div class="col-md-1 ">
             @Html.ActionLink("Agregar", "Form", "Beca", htmlAttributes: new { @class = "btn btn-success" })
-        </div>
-        <br> <br />
+        </div>        
     </div>
+    <br> <br />
     <div class="row">
         <div class="col-lg-12">
             <table class="table table-bordered table-responsive">
                 <thead class="thead-dark">
                     <tr>
-                        <td>Editar</td>
-                        <td>Nombre Beca</td>
-                        <td>MontoMensual</td>                      
-                        <td>Eliminar</td>
+                        <td class="text-center" scope="col">Editar</td>
+                        <td class="text-center" scope="col" >Nombre Beca</td>
+                        <td class="text-center" scope="col" >MontoMensual</td>                      
+                        <td class="text-center" scope="col">Eliminar</td>
 
                         
 
@@ -41,10 +34,10 @@
                     @foreach (ML.Beca beca in Model.BecaList)
                     {
                         <tr>
-                            <td><a class="btn  btn-warning  glyphicon glyphicon-edit" href="@Url.Action("Form", "Beca", new { IdBeca = beca.IdBeca })"></a></td>                            
-                            <td>@beca.NombreBeca</td>    
-                            <td>@beca.MontoMensual</td>   
-                            <td><a class="btn btn-danger glyphicon glyphicon-trash " href="@Url.Action("Delete", "Beca", new { IdBeca = beca.IdBeca })" onclick="return confirm('¿Estas seguro que deseas eliminar este registro?');"></a></td>
+                            <td style="text-align: center; vertical-align: middle;"><a class="btn  btn-warning  glyphicon" href="@Url.Action("Form", "Beca", new { IdBeca = beca.IdBeca })"><i class="bi bi-pencil-square" style="color: ivory"></i></a></td>                                                     
+                            <td style="text-align: center;">@beca.NombreBeca</td>    
+                            <td style="text-align: center;" >@beca.MontoMensual</td>
+                            <td style="text-align: center; vertical-align: middle;"><a class="btn btn-danger glyphicon " href="@Url.Action("Delete", "Beca", new { IdBeca = beca.IdBeca })" onclick="return confirm('¿Estas seguro que deseas eliminar este registro?');"><i class="bi bi-eraser-fill" style="color: ivory"></i></a></td>
                         </tr>
                     }
                 </tbody>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,7 @@ namespace BL
 {
     public class Beca
     {
+       
         public static ML.Result GetAllLINQ()
         {
             ML.Result result = new ML.Result();
@@ -193,7 +195,7 @@ namespace BL
                 {
                     var query = (from bec in context.Becas
                                  where bec.IdBeca == becaMl.IdBeca
-                                 select bec).First();
+                                 select bec).FirstOrDefault();
                     if (query != null)
                     {
                         context.Becas.Remove(query);

@@ -11,7 +11,7 @@ namespace DL
         public string? ApellidoMat { get; set; }
         public string? Fotografia { get; set; }
         public bool? Sexo { get; set; }
-        public int? IdBeca { get; set; }
+        public int? IdBeca { get; set; }        
 
         public virtual Beca? IdBecaNavigation { get; set; }
     }

@@ -54,28 +54,28 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">×</button>
-                <h4 class="modal-title" id="myModalLabel">Actualizar Materia</h4>
+                <h4 class="modal-title" id="myModalLabel"> Actualizar Materia</h4>
             </div>
 
             <div class="modal-body">
                 <form>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="txtIdMateria" placeholder="IdMateria" disabled="disabled" />
+                        <input type="text" class="form-control" id="txtIdMateria" placeholder="IdMateria" disabled="disabled" /><i class="bi bi-pencil-square" style="color: ivory"></i>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="txtNombreMateria" placeholder="NombreMateria" />
+                        <input type="text" class="form-control" id="txtNombreMateria" placeholder="Nombre Materia" />
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" >
                         <input type="text" class="form-control" id="txtCreditos" placeholder="Creditos" />
                     </div>
                     <div class="form-group"> 
-                        <input type="text" class="form-control" id="txtIdSemestre" placeholder="Semestre" />
+                        <input type="text" class="form-control" id="ddlSemestres" placeholder="Semestre" />
                     </div>
                 </form>
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="btn glyphicon glyphicon-pencil" id="btnUpdate" onclick="Update()">Actualizar</button>
+                <button type="button" class="btn glyphicon glyphicon-pencil" id="btnUpdate" onclick="Update()"> Actualizar </button>
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
             </div>
         </div>

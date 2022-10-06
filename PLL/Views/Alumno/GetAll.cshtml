@@ -6,54 +6,45 @@
 <div class="container">
     <div class="row">
         <div class="=col-md-12">
-            <h2>Control de Alumnos: </h2>
+            <h2>Lista de Alumnos: </h2>
         </div>
     </div>
-     <hr />
+    <hr />
     <div class="row">
-        <div class="col-md-6">
-            <h5></h5>
-        </div>
-    </div>
-    <br /> <br />
-    <div class="row">
-        <div class="col-md-1 ">
+        <div class="col-md-1 center; vertical-align: middle;" ">
             @Html.ActionLink("Agregar", "Form", "Alumno", htmlAttributes: new { @class = "btn btn-success" })
         </div>
-        <br> <br />
     </div>
+    <br />
     <div class="row">
         <div class="col-lg-12">
             <table class="table table-bordered table-responsive">
                 <thead class="thead-dark">
                     <tr>
-                        <td>Editar</td>
-                        <td>Alumno</td>
-                        <td>Fotografia</td>                      
-                        <td>Eliminar</td>
-
-                        
-
+                        <td class="text-center" scope="col">Editar</td>
+                        <td class="text-center" scope="col">Alumno</td>
+                        <td class="text-center" scope="col">Fotografia</td>
+                        <td class="text-center" scope="col">Eliminar</td>
                     </tr>
                 </thead>
-                <tbody> 
+                <tbody>
                     @foreach (ML.Alumno alumno in Model.AlumnoList)
                     {
                         <tr>
-                            <td><a class="btn  btn-warning  glyphicon glyphicon-edit" href="@Url.Action("Form", "Alumno", new { IdAlumno = alumno.IdAlumno })"></a></td>                            
-                            <td>@alumno.Nombre @alumno.ApellidoPat @alumno.ApellidoMat</td>
-                            <td>
-                            @if(alumno.Fotografia != null)
-                            {
-                                <img id="Img" src="data:image/*;base64,@(alumno.Fotografia)" style="width:40px ; height:40px;" />
-                            }
-                            else
-                            {
-                                <img id="Img" src="~/image/sinfoto.jpg" style="width:40px ; height:40px" />
-                            }
-                        </td>   
-                            
-                            <td><a class="btn btn-danger glyphicon glyphicon-trash " href="@Url.Action("Delete", "Alumno", new { IdAlumno = alumno.IdAlumno })" onclick="return confirm('¿Estas seguro que deseas eliminar este registro?');"></a></td>
+                            <td style="text-align: center; vertical-align: middle;"><a class="btn  btn-warning  glyphicon" href="@Url.Action("Form", "Alumno", new { IdAlumno = alumno.IdAlumno })"><i class="bi bi-pencil-square" style="color: ivory"></i></a></td>
+                            <td style="text-align: center;">@alumno.Nombre @alumno.ApellidoPat @alumno.ApellidoMat </td>
+                            <td style="text-align: center;">
+                                @if (alumno.Fotografia != null)
+                                {
+                                    <img id="Img" src="data:image/*;base64,@(alumno.Fotografia)" style="width:40px ; height:40px;" />
+                                }
+                                else
+                                {
+                                    <img id="Img" src="~/image/sinfoto.jpg" style="width:40px ; height:40px" />
+                                }
+                            </td>
+
+                            <td style="text-align: center; vertical-align: middle;"><a class="btn btn-danger glyphicon " href="@Url.Action("Delete", "Alumno", new { IdAlumno = alumno.IdAlumno })" onclick="return confirm('¿Estas seguro que deseas eliminar este registro?');"><i class="bi bi-eraser-fill" style="color: ivory"></i></a></td>
                         </tr>
                     }
                 </tbody>

@@ -20,6 +20,7 @@ namespace DL
         public virtual DbSet<Beca> Becas { get; set; } = null!;
         public virtual DbSet<Materium> Materia { get; set; } = null!;
         public virtual DbSet<Semestre> Semestres { get; set; } = null!;
+        public virtual DbSet<Usuario> Usuarios { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -96,6 +97,22 @@ namespace DL
                 entity.ToTable("Semestre");
 
                 entity.Property(e => e.NombreSemestre)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<Usuario>(entity =>
+            {
+                entity.HasKey(e => e.IdUsuario)
+                    .HasName("PK__Usuario__5B65BF974318A36D");
+
+                entity.ToTable("Usuario");
+
+                entity.Property(e => e.Clave)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Username)
                     .HasMaxLength(50)
                     .IsUnicode(false);
             });

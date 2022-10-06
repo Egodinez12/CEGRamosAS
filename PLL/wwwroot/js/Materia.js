@@ -13,14 +13,15 @@ function GetAll() {
             $.each(result.objects, function (i, materia) {
                 var filas =
                     '<tr>'
-                    + '<td style="text-align: center; vertical-align: middle;"><a class="btn btn-warning glyphicon"> '
-                    + '<a href="#" onclick="GetById(' + materia.idMateria + ')">'
-                    + '</a> '
+                    + '<td style="text-align: center; vertical-align: middle;">'
+                    + '<button class="btn btn-warning" onclick="GetById(' + materia.idMateria + ')"></button>'
+                    //+ '<a href="#" onclick="GetById(' + materia.idMateria + ')">'
+                    //+ '</a> '
                     + '</td>'
                     + "<td  id='id' class='text-center'>" + materia.idMateria + "</td>"
                     + "<td class='text-center'>" + materia.nombreMateria + "</td>"
                     + "<td class='text-center'>" + materia.creditos + "</ td>"
-                    + "<td class='text-center'>" + materia.semestre.idSemestre + "</td>"                    
+                    + "<td class='text-center'>" + materia.semestre.nombreSemestre + "</td>"                    
                     + '<td class="text-center"> <button class="btn btn-danger" onclick="Eliminar(' + materia.idMateria + ')"><span class="glyphicon glyphicon-trash" style="color:#FFFFFF"></span></button></td>'
 
                     + "</tr>";
@@ -81,10 +82,10 @@ function GetById(IdMateria) {
         type: 'GET',
         url: 'http://localhost:5105/Api/Materia/GetById/' + IdMateria,
         success: function (result) {
-            $('#txtIdMateria').val(result.Object.idMateria);
-            $('#txtNombreMateria').val(result.Object.nombreMateria);
-            $('#txtCreditos').val(result.Object.creditos);
-            $('#txtIdSemestre').val(result.Object.semestre.idSemestre);
+            $('#txtIdMateria').val(result.object.idMateria);
+            $('#txtNombreMateria').val(result.object.nombreMateria);
+            $('#txtCreditos').val(result.object.creditos);
+            $('#txtIdSemestre').val(result.object.semestre.idSemestre);
             $('#ModalUpdate').modal('show');
         },
         error: function (result) {

@@ -9,7 +9,7 @@ namespace PLL.Controllers
 
         private readonly IHostingEnvironment _hostingEnvironment;
 
-        public AlumnoController (IConfiguration configuration, IHostingEnvironment hostingEnvironment)
+        public AlumnoController(IConfiguration configuration, IHostingEnvironment hostingEnvironment)
         {
             _configuration = configuration;
             _hostingEnvironment = hostingEnvironment;
@@ -20,13 +20,9 @@ namespace PLL.Controllers
         {
 
             ML.Alumno alumno = new ML.Alumno();
-            ML.Result resultAlumno = BL.Alumno.GetAllLINQ();
+            ML.Result resultAlumno = new ML.Result();
             alumno.AlumnoList = resultAlumno.Objects;
             resultAlumno.Objects = new List<object>();
-
-
-
-
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(_configuration["WebAPI"]);
@@ -38,7 +34,7 @@ namespace PLL.Controllers
 
                 if (result.IsSuccessStatusCode)
                 {
-                    var readTask = result.Content.ReadAsAsync <ML.Result>();
+                    var readTask = result.Content.ReadAsAsync<ML.Result>();
                     readTask.Wait();
 
                     foreach (var resultItem in readTask.Result.Objects)
@@ -82,7 +78,7 @@ namespace PLL.Controllers
                 if (result.Correct)
                 {
                     alumno = ((ML.Alumno)result.Object);
-                 
+
                     return View(alumno);
 
                 }
@@ -103,15 +99,14 @@ namespace PLL.Controllers
         {
 
 
-            //obtengo la imagen
+
             IFormFile file = Request.Form.Files["IFImagen"];
 
-            //valido si traigo imagen
+
             if (file != null)
             {
-                //llamar al metodo que convierte a bytes la imagen
+
                 byte[] ImagenBytes = ConvertToBytes(file);
-                //convierto a base 64 la imagen y la guardo en mi objeto materia
                 alumno.Fotografia = Convert.ToBase64String(ImagenBytes);
             }
 
@@ -162,36 +157,7 @@ namespace PLL.Controllers
 
 
         }
-        [HttpGet]
-        public ActionResult Delete(ML.Alumno alumno)
-        {
 
-            ML.Result resultAlumno = new ML.Result();
-            int idAlumno = alumno.IdAlumno;
-            alumno.IdAlumno = idAlumno;
-
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri("http://localhost:5105/Api/");
-
-                //HTTP POST
-                var postTask = client.DeleteAsync("Alumno/Delete/" + idAlumno);
-                postTask.Wait();
-
-                var result = postTask.Result;
-                if (result.IsSuccessStatusCode)
-                {
-                    ViewBag.Message = "El usuario ha sido eliminada";
-                }
-                else
-                {
-                    ViewBag.Message = "El usuario no pudo ser eliminado" + resultAlumno.MessangeError;
-                }
-            }
-
-            return PartialView("Modal");
-
-        }
 
         public static byte[] ConvertToBytes(IFormFile fotografia)
         {
@@ -204,6 +170,33 @@ namespace PLL.Controllers
             return bytes;
         }
 
+        [HttpGet]
+        public ActionResult Delete(ML.Alumno alumno)
+        {
+            ML.Result resultAlumno = new ML.Result();
+            int id = alumno.IdAlumno;
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(_configuration["WebAPI"]);
 
+                //HTTP POST
+                var postTask = client.DeleteAsync("Api/Alumno/delete/" + id);
+                postTask.Wait();
+
+                var result = postTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    resultAlumno = BL.Alumno.GetAllLINQ();
+                    return RedirectToAction("GetAll", resultAlumno);
+                }
+            }
+
+
+            resultAlumno = BL.Alumno.GetAllLINQ();
+
+            return View("GetAll", resultAlumno);
+
+
+        }
     }
 }
