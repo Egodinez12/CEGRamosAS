@@ -36,7 +36,7 @@ namespace DL
             modelBuilder.Entity<Alumno>(entity =>
             {
                 entity.HasKey(e => e.IdAlumno)
-                    .HasName("PK__Alumno__460B47409A8F462E");
+                    .HasName("PK__Alumno__460B474018E0ACD8");
 
                 entity.ToTable("Alumno");
 
@@ -54,10 +54,14 @@ namespace DL
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
+                entity.Property(e => e.Sexo)
+                    .HasMaxLength(1)
+                    .IsUnicode(false);
+
                 entity.HasOne(d => d.IdBecaNavigation)
                     .WithMany(p => p.Alumnos)
                     .HasForeignKey(d => d.IdBeca)
-                    .HasConstraintName("FK__Alumno__IdBeca__182C9B23");
+                    .HasConstraintName("FK__Alumno__IdBeca__4222D4EF");
             });
 
             modelBuilder.Entity<Beca>(entity =>

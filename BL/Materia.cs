@@ -34,7 +34,7 @@ namespace BL
                             materia.IdMateria = obj.IdMateria;
                             materia.NombreMateria = obj.NombreMateria;
                             materia.Creditos = Convert.ToByte(obj.Creditos);
-                            
+
                             materia.Semestre = new ML.Semestre();
                             materia.IdSemestre = obj.IdSemestre.Value;
                             materia.Semestre.NombreSemestre = obj.NombreSemestre;
@@ -83,7 +83,7 @@ namespace BL
 
 
                                  }).FirstOrDefault();
-                    
+
                     result.Objects = new List<object>();
                     if (query != null)
                     {
@@ -133,7 +133,7 @@ namespace BL
                     materium.NombreMateria = materiaML.NombreMateria;
                     materium.Creditos = materiaML.Creditos;
                     materium.IdSemestre = materiaML.IdSemestre;
-                    
+
 
                     context.Materia.Add(materium);
                     context.SaveChanges();
@@ -189,6 +189,8 @@ namespace BL
                     }
                     result.Correct = true;
                 }
+
+
             }
             catch (Exception ex)
             {
@@ -226,6 +228,8 @@ namespace BL
 
 
                 }
+
+
             }
             catch (Exception ex)
             {

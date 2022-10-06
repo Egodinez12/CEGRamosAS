@@ -15,7 +15,7 @@ namespace BL
             {
                 using (DL.CEGRamosAlfaSolucionesContext context = new DL.CEGRamosAlfaSolucionesContext())
                 {
-                    var query = (from semestre in context.Semestres                                     
+                    var query = (from semestre in context.Semestres
                                  select new
                                  {
                                      semestre.IdSemestre,
@@ -64,7 +64,7 @@ namespace BL
                     DL.Semestre semestreDL = new DL.Semestre();
 
                     semestreDL.NombreSemestre = semestre.NombreSemestre;
-                    
+
                     context.Semestres.Add(semestreDL);
                     context.SaveChanges();
                     if (semestre != null)
@@ -79,6 +79,8 @@ namespace BL
                     }
                     result.Correct = true;
                 }
+
+
             }
             catch (Exception ex)
             {

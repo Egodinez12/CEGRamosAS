@@ -12,6 +12,7 @@ namespace BL
             {
                 using (DL.CEGRamosAlfaSolucionesContext context = new DL.CEGRamosAlfaSolucionesContext())
                 {
+
                     var query = context.Alumnos.FromSqlRaw($"BecasGetAll {idBeca}").ToList();
                     result.Objects = new List<object>();
 
@@ -20,14 +21,15 @@ namespace BL
                         foreach (var objecto in query)
                         {
                             ML.Alumno alumno = new ML.Alumno();
+                            alumno.IdAlumno = objecto.IdAlumno;
                             alumno.Nombre = objecto.Nombre;
                             alumno.ApellidoPat = objecto.ApellidoPat;
                             alumno.ApellidoMat = objecto.ApellidoMat;
                             alumno.Fotografia = objecto.Fotografia;
-                            alumno.Sexo = (bool)objecto.Sexo;
-                            alumno.Beca = new ML.Beca();                                                       
+                            alumno.Sexo = objecto.Sexo;
+                            alumno.Beca = new ML.Beca();
                             alumno.Beca.IdBeca = objecto.IdBeca.Value;
-                            
+
                             result.Objects.Add(alumno);
                             result.Correct = true;
                         }
@@ -82,6 +84,8 @@ namespace BL
                     }
                     result.Correct = true;
                 }
+
+
             }
             catch (Exception ex)
             {
@@ -97,11 +101,11 @@ namespace BL
             ML.Result result = new ML.Result();
             try
             {
-                using(DL.CEGRamosAlfaSolucionesContext context = new DL.CEGRamosAlfaSolucionesContext())
+                using (DL.CEGRamosAlfaSolucionesContext context = new DL.CEGRamosAlfaSolucionesContext())
                 {
                     var query = (from alumno in context.Alumnos
-                                 //join beca in context.Becas on alumno.IdBeca equals beca.IdBeca
-                                 //where alumno.IdBeca == null
+                                     //join beca in context.Becas on alumno.IdBeca equals beca.IdBeca
+                                     //where alumno.IdBeca == null
                                  select new
                                  {
                                      alumno.IdAlumno,
@@ -113,12 +117,12 @@ namespace BL
                                      //alumno.IdBeca,
                                      //beca.NombreBeca,
                                      //beca.MontoMensual
-                                 }                                 
+                                 }
                                  );
                     result.Objects = new List<object>();
-                    if(query != null && query.ToList().Count > 0 )
+                    if (query != null && query.ToList().Count > 0)
                     {
-                        foreach( var obj in query)
+                        foreach (var obj in query)
                         {
                             ML.Alumno alumno = new ML.Alumno();
                             alumno.IdAlumno = obj.IdAlumno;
@@ -126,7 +130,7 @@ namespace BL
                             alumno.ApellidoPat = obj.ApellidoPat;
                             alumno.ApellidoMat = obj.ApellidoMat;
                             alumno.Fotografia = obj.Fotografia;
-                            alumno.Sexo = Convert.ToBoolean(obj.Sexo);
+                            alumno.Sexo = obj.Sexo;
 
 
                             //alumno.IdBeca = obj.IdBeca.Value;
@@ -146,7 +150,8 @@ namespace BL
                     }
                 }
 
-            }catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 result.Correct=false;
                 result.MessangeError=ex.Message;
@@ -163,7 +168,7 @@ namespace BL
                 using (DL.CEGRamosAlfaSolucionesContext context = new DL.CEGRamosAlfaSolucionesContext())
                 {
                     var query = (from alumno in context.Alumnos
-                                 //join beca in context.Becas on alumno.IdBeca equals beca.IdBeca
+                                     //join beca in context.Becas on alumno.IdBeca equals beca.IdBeca
                                  where alumno.IdAlumno == idalumno
                                  select new
                                  {
@@ -181,23 +186,23 @@ namespace BL
                     result.Objects = new List<object>();
                     if (query != null)
                     {
-                        
+
                         ML.Alumno alumno = new ML.Alumno();
                         alumno.IdAlumno = query.IdAlumno;
                         alumno.Nombre = query.Nombre;
                         alumno.ApellidoPat = query.ApellidoPat;
                         alumno.ApellidoMat = query.ApellidoMat;
                         alumno.Fotografia = query.Fotografia;
-                        alumno.Sexo = Convert.ToBoolean(query.Sexo);
+                        alumno.Sexo = query.Sexo;
 
-                        
+
                         //alumno.IdBeca = objalumno.IdBeca.Value;
                         //alumno.Beca.NombreBeca = obj.NombreBeca;
                         //alumno.Beca.MontoMensual = Convert.ToByte(obj.MontoMensual);
                         result.Object = alumno;
-                            result.Correct = true;
+                        result.Correct = true;
 
-                        
+
                         result.Correct = true;
 
                     }
@@ -232,21 +237,23 @@ namespace BL
                     alumnoDL.ApellidoMat = alumnoMl.ApellidoMat;
                     alumnoDL.Fotografia = alumnoMl.Fotografia;
                     alumnoDL.Sexo = alumnoMl.Sexo;
-                    
+
                     context.Alumnos.Add(alumnoDL);
                     context.SaveChanges();
-                    if(alumnoMl != null)
+                    if (alumnoMl != null)
                     {
                         result.Correct = true;
 
                     }
                     else
                     {
-                        result.Correct=false;
+                        result.Correct = false;
                         result.MessangeError = "No ha insertado ningun registro";
                     }
-                    result.Correct=true;
+                    result.Correct = true;
                 }
+
+
             }
             catch (Exception ex)
             {
@@ -289,6 +296,8 @@ namespace BL
                     }
                     result.Correct = true;
                 }
+            
+            
             }
             catch (Exception ex)
             {
@@ -371,7 +380,7 @@ namespace BL
                             alumno.ApellidoPat = obj.ApellidoPat;
                             alumno.ApellidoMat = obj.ApellidoMat;
                             alumno.Fotografia = obj.Fotografia;
-                            alumno.Sexo = Convert.ToBoolean(obj.Sexo);
+                            alumno.Sexo = obj.Sexo;
 
                             alumno.Beca = new ML.Beca();
                             alumno.IdBeca = obj.IdBeca.Value;
@@ -421,7 +430,7 @@ namespace BL
                                      alumno.ApellidoMat,
                                      alumno.Fotografia,
                                      alumno.Sexo,
-                                     alumno.IdBeca,                                     
+                                     alumno.IdBeca,                                   
 
                                  }).FirstOrDefault();
 
@@ -435,9 +444,7 @@ namespace BL
                         alumno.ApellidoPat = query.ApellidoPat;
                         alumno.ApellidoMat = query.ApellidoMat;
                         alumno.Fotografia = query.Fotografia;
-                        alumno.Sexo = Convert.ToBoolean(query.Sexo);
-
-
+                        alumno.Sexo = query.Sexo;
                         alumno.IdBeca = query.IdBeca.Value;
                         
                         result.Object = alumno;

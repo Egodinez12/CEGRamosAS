@@ -161,14 +161,16 @@ namespace PLL.Controllers
                 if (result.IsSuccessStatusCode)
                 {
                     resultBeca = BL.Beca.GetAllLINQ();
-                    return RedirectToAction("GetAll", resultBeca);
+
+                    ViewBag.Message = "Se ha eliminado un Registro";
+                    return PartialView("Modal");
                 }
             }
 
 
-            resultBeca = BL.Beca.GetAllLINQ();
+            //resultBeca = BL.Beca.GetAllLINQ();
 
-            return View("GetAll", resultBeca);
+            return PartialView("Modal");
 
 
         }

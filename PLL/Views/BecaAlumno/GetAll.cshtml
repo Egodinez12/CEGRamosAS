@@ -15,7 +15,7 @@
 {
  <div class="row">
         <div class="col-md-3">
-            @Html.DropDownListFor(model => model.Beca.IdBeca, new SelectList(Model.Beca.BecaList, "IdBeca", "NombreBeca"), "Alumnos", new { @class = "form-control bg-light text-dark" })
+            @Html.DropDownListFor(model => model.Beca.IdBeca, new SelectList(Model.Beca.BecaList, "IdBeca", "NombreBeca"), "Seleccione una Opcion", new { @class = "form-control bg-light text-dark" })
         </div>
 
         <div class="col-md-1">
@@ -33,8 +33,8 @@
                         <td class="text-center" scope="col"> Alumno </td>
                         <td class="text-center" scope="col"> Fotografia </td>
                         <td class="text-center" scope="col"> Sexo </td>
-                        <td class="text-center" scope="col"> Beca </td>
-                        <td class="text-center" scope="col"> Percepcion Mensual </td>
+                        @*<td class="text-center" scope="col"> Beca </td>
+                        <td class="text-center" scope="col"> Percepcion Mensual </td>*@
                         <td class="text-center" scope="col"> Editar Beca Alumno </td>
                     </tr>
                 </thead>
@@ -55,19 +55,12 @@
                                 }
                             </td>
                              <td style="text-align: center;"> 
-                                @if(alumno.Sexo == null)
-                                {
-                                    <h6> Mujer </h6>
-                                }
-                                else
-                                {
-                                    <h6> Hombre </h6>
-                                }
+                                @alumno.Sexo
                             </td>
-                            <td style="text-align: center;"> 
+                            @*<td style="text-align: center;"> 
                                 @alumno.Beca.NombreBeca
-                            </td>
-                            <td style="text-align: center;"> @alumno.Beca.MontoMensual</td>
+                            </td>*@
+                            @*<td style="text-align: center;"> @alumno.Beca.MontoMensual</td>*@
                            
                             <td style="text-align: center; vertical-align: middle;"><a class="btn  btn-success  glyphicon" href="@Url.Action("Form", "BecaAlumno", new { IdAlumno = alumno.IdAlumno })"><i class="bi bi-pencil-square" style="color: ivory"></i></a></td>
                             

@@ -18,12 +18,12 @@ namespace BL
                 using (DL.CEGRamosAlfaSolucionesContext context = new DL.CEGRamosAlfaSolucionesContext())
                 {
                     var query = (from beca in context.Becas
-                                     
+
                                  select new
                                  {
-                                    beca.IdBeca,
-                                    beca.NombreBeca,
-                                    beca.MontoMensual
+                                     beca.IdBeca,
+                                     beca.NombreBeca,
+                                     beca.MontoMensual
                                  });
                     result.Objects = new List<object>();
                     if (query != null && query.ToList().Count > 0)
@@ -31,7 +31,7 @@ namespace BL
                         foreach (var obj in query)
                         {
                             ML.Beca beca = new ML.Beca();
-                           
+
                             beca.IdBeca = obj.IdBeca;
                             beca.NombreBeca = obj.NombreBeca;
                             beca.MontoMensual = Convert.ToDecimal(obj.MontoMensual);
@@ -67,7 +67,7 @@ namespace BL
             {
                 using (DL.CEGRamosAlfaSolucionesContext context = new DL.CEGRamosAlfaSolucionesContext())
                 {
-                    var query = (from beca in context.Becas                                     
+                    var query = (from beca in context.Becas
                                  where beca.IdBeca == IdBeca
                                  select new
                                  {
@@ -76,7 +76,7 @@ namespace BL
                                      beca.MontoMensual
                                  }).FirstOrDefault();
 
-                   
+
                     result.Objects = new List<object>();
                     if (query != null)
                     {
@@ -137,6 +137,8 @@ namespace BL
                     }
                     result.Correct = true;
                 }
+
+
             }
             catch (Exception ex)
             {
@@ -176,6 +178,8 @@ namespace BL
                     }
                     result.Correct = true;
                 }
+
+
             }
             catch (Exception ex)
             {
@@ -213,6 +217,8 @@ namespace BL
 
 
                 }
+
+
             }
             catch (Exception ex)
             {

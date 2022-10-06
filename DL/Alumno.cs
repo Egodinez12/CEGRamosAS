@@ -10,8 +10,8 @@ namespace DL
         public string? ApellidoPat { get; set; }
         public string? ApellidoMat { get; set; }
         public string? Fotografia { get; set; }
-        public bool? Sexo { get; set; }
-        public int? IdBeca { get; set; }        
+        public string? Sexo { get; set; }
+        public int? IdBeca { get; set; }
 
         public virtual Beca? IdBecaNavigation { get; set; }
     }

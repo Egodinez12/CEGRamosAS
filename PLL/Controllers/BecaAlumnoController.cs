@@ -23,7 +23,7 @@ namespace PLL.Controllers
 
             alumno.Beca = new ML.Beca();
 
-            ML.Result result = BL.Alumno.GetAllBecaAlumnoInner();
+            ML.Result result = BL.Alumno.GetAllBecas(alumno.Beca.IdBeca);
             ML.Result resultBecas = BL.Beca.GetAllLINQ();
             alumno.Beca.BecaList = resultBecas.Objects;
             alumno.AlumnoList = result.Objects;
@@ -43,83 +43,67 @@ namespace PLL.Controllers
             return View(alumno);
         }
 
-        //public ActionResult Form(int? IdAlumno)
-        //{
-        //    ML.Alumno alumno = new ML.Alumno();
-        //    if (IdAlumno != null)
-        //    {
-        //        ML.Result result = BL.Alumno.GetAllLINQ();
-
-        //        using (var client = new HttpClient())
-        //        {
-        //            client.BaseAddress = new Uri(_configuration["WebAPI"]);
-        //            var responseTask = client.GetAsync("Api/Alumno/GetById/" + IdAlumno);
-        //            responseTask.Wait();
-
-        //            var resultAPI = responseTask.Result;
-        //            if (resultAPI.IsSuccessStatusCode)
-        //            {
-        //                var readTask = resultAPI.Content.ReadAsAsync<ML.Result>();
-        //                readTask.Wait();
-        //                ML.Alumno resultItemList = new ML.Alumno();
-        //                resultItemList = Newtonsoft.Json.JsonConvert.DeserializeObject<ML.Alumno>(readTask.Result.Object.ToString());
-        //                result.Object = resultItemList;
-        //            }
-
-        //        }
-        //        if (result.Correct)
-        //        {
-        //            alumno = ((ML.Alumno)result.Object);
-
-        //            return View(alumno);
-
-        //        }
-        //        else
-        //        {
-        //            ViewBag.Message = " No se realizo la consulta" + result.MessangeError;
-        //            return View("Modal");
-        //        }
-        //    }
-        //    else
-        //    {
-        //        return View(alumno);
-        //    }
-        //}
-
-        //[HttpPost]
-        //public ActionResult Form(ML.Alumno alumno)
-        //{
-        //    IFormFile file = Request.Form.Files["IFImagen"];
-
-        //    if (file != null)
-        //    {
-
-        //        byte[] ImagenBytes = ConvertToBytes(file);
-        //        alumno.Fotografia = Convert.ToBase64String(ImagenBytes);
-        //    }           
-        //        using (var client = new HttpClient())
-        //        {
-        //            client.BaseAddress = new Uri(_configuration["WebAPI"]);
-
-        //            //HTTP POST
-        //            var postTask = client.PutAsJsonAsync<ML.Alumno>("Api/Alumno/Update/" + alumno.IdAlumno, alumno);
-        //            postTask.Wait();
-
-        //            var result = postTask.Result;
-
-        //            if (result.IsSuccessStatusCode)
-        //            {
-        //                ViewBag.Message = "Se ha actualizado un Registro";
-        //                return RedirectToAction("GetAll");
-        //            }
+        [HttpGet]
+        public ActionResult Form(int? idAlumno)
+        {
+            IFormFile file = Request.Form.Files["IFImagen"];
 
 
-        //        }
-           
-        //    return View("GetAll");
+            
+
+            ML.Alumno alumno = new ML.Alumno();           
+            ML.Result resultBeca = BL.Beca.GetAllLINQ();
+            alumno.Beca = new ML.Beca();
+            alumno.Beca.BecaList = resultBeca.Objects;
+
+            if (idAlumno != null)
+            {
+                ML.Result result = BL.Alumno.GetByBeca(idAlumno.Value);
+                if (result.Correct)
+                {
+                    alumno = ((ML.Alumno)result.Object);
+                    alumno.Beca.BecaList = resultBeca.Objects;
+                    
+
+                    return View(alumno);
+
+                }
+                else
+                {
+                    ViewBag.Message = " No se realizo la consulta" + result.MessangeError;
+                    return View("Modal");
+                }
+            }
+            else
+            {
+                alumno.Beca.BecaList = resultBeca.Objects;
+                return View(alumno);
+            }
+        }
+        [HttpPost]
+        public ActionResult Form(ML.Alumno alumno)
+        {            
+            ML.Result result = new ML.Result();
+            ML.Result resultbeca = BL.Beca.GetAllLINQ();
+            alumno.Beca = new ML.Beca();
 
 
-        //}
+            result = BL.Alumno.AsignarBecaUpdateAlumno(alumno);
+
+            if (result.Correct)
+            {
+                ViewBag.Message = "El empleado se ha actualizado correctamente";
+            }
+            else
+            {
+                ViewBag.Message = "El empleado no se ha actualizado correctamente " + result.MessangeError;
+            }
+                                                  
+            alumno.Beca.BecaList = resultbeca.Objects;
+                         
+            return PartialView("Modal");
+
+        }
 
         public static byte[] ConvertToBytes(IFormFile imagen)
         {

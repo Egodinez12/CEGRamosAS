@@ -124,7 +124,8 @@ namespace PLL.Controllers
                     var result = postTask.Result;
                     if (result.IsSuccessStatusCode)
                     {
-                        return RedirectToAction("GetAll");
+                        ViewBag.Message = "Se creado un registro";
+                        return PartialView("Modal");
                     }
                 }
 
@@ -146,14 +147,14 @@ namespace PLL.Controllers
                     if (result.IsSuccessStatusCode)
                     {
                         ViewBag.Message = "Se ha actualizado un Registro";
-                        return RedirectToAction("GetAll");
+                        return PartialView("Modal");
                     }
 
 
                 }
 
             }
-            return View("GetAll");
+            return PartialView("Modal");
 
 
         }
@@ -187,14 +188,16 @@ namespace PLL.Controllers
                 if (result.IsSuccessStatusCode)
                 {
                     resultAlumno = BL.Alumno.GetAllLINQ();
-                    return RedirectToAction("GetAll", resultAlumno);
+                    ////return RedirectToAction("GetAll", resultAlumno);
+                    ViewBag.Message = "Se ha eliminado un Registro";
+                    return PartialView("Modal");
                 }
             }
 
 
-            resultAlumno = BL.Alumno.GetAllLINQ();
+            //resultAlumno = BL.Alumno.GetAllLINQ();
 
-            return View("GetAll", resultAlumno);
+            return PartialView("Modal");
 
 
         }
