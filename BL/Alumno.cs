@@ -5,15 +5,15 @@ namespace BL
     public class Alumno
     {
         //Sql Server
-        public static ML.Result GetAllBecas(int idBeca)
+        public static ML.Result GetAllBecas(int idbeca)
         {
             ML.Result result = new ML.Result();
             try
             {
                 using (DL.CEGRamosAlfaSolucionesContext context = new DL.CEGRamosAlfaSolucionesContext())
                 {
-
-                    var query = context.Alumnos.FromSqlRaw($"BecasGetAll {idBeca}").ToList();
+                   
+                    var query = context.Alumnos.FromSqlRaw($"BecasGetAll {idbeca}").ToList();
                     result.Objects = new List<object>();
 
                     if (query != null)
@@ -51,50 +51,40 @@ namespace BL
             return result;
         }
         //AsignarBeca
-        public static ML.Result AsignarBecaUpdateAlumno(ML.Alumno alumnoMl)
+        public static ML.Result AsignarBecaUpdateAlumno(ML.Alumno alumno)
         {
             ML.Result result = new ML.Result();
+
+
             try
             {
                 using (DL.CEGRamosAlfaSolucionesContext context = new DL.CEGRamosAlfaSolucionesContext())
                 {
-                    var query = (from alu in context.Alumnos
-                                 where alu.IdAlumno == alumnoMl.IdAlumno
-                                 select alu).FirstOrDefault();
+                    var query = context.Database.ExecuteSqlRaw($"UpdateBecaAlumno {alumno.IdBeca},{alumno.IdAlumno}");
 
 
-
-                    if (query != null)
+                    if (query >= 1)
                     {
-                        query.Nombre = alumnoMl.Nombre;
-                        query.ApellidoPat = alumnoMl.ApellidoPat;
-                        query.ApellidoMat = alumnoMl.ApellidoMat;
-                        query.Fotografia = alumnoMl.Fotografia;
-                        query.Sexo = alumnoMl.Sexo;
-                        query.IdBeca = alumnoMl.IdBeca;
-
-                        context.SaveChanges();
                         result.Correct = true;
-
                     }
                     else
                     {
                         result.Correct = false;
-                        result.MessangeError = "No ha modificado ningun registrado";
+                        result.MessangeError = "No se Inserto un Registro";
+
                     }
                     result.Correct = true;
                 }
-
-
             }
             catch (Exception ex)
             {
                 result.Correct = false;
                 result.MessangeError = ex.Message;
-                result.ex = ex;
+
             }
             return result;
         }
+
 
         public static ML.Result GetAllLINQ()
         {
@@ -237,6 +227,7 @@ namespace BL
                     alumnoDL.ApellidoMat = alumnoMl.ApellidoMat;
                     alumnoDL.Fotografia = alumnoMl.Fotografia;
                     alumnoDL.Sexo = alumnoMl.Sexo;
+                    alumnoDL.IdBeca= 8;
 
                     context.Alumnos.Add(alumnoDL);
                     context.SaveChanges();

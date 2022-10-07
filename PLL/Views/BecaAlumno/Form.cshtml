@@ -16,38 +16,16 @@
 @using (Html.BeginForm("Form", "BecaAlumno", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     <div class="row">
+       
         <div class="col-md-3" style="display: none;">
-            @Html.TextBoxFor(model => model.IdAlumno, new { @class = "hidden form-control", autocomplete = "off" })
+            @Html.LabelFor(model => model.Nombre) @Html.LabelFor(model => model.ApellidoPat) @Html.LabelFor(model => model.ApellidoMat)
+        </div>
+
+        <div class="col-md-3" style="display: none;">
+            @Html.LabelFor(model => model.ApellidoPat)
         </div>
         
-        <div class="col-md-3" style="display: none;">
-            @Html.TextBoxFor(model => model.Nombre, new { @class = "hidden form-control", autocomplete = "off" })
-        </div>
 
-        <div class="col-md-3" style="display: none;">
-            @Html.TextBoxFor(model => model.ApellidoPat, new { @class = "hidden form-control", autocomplete = "off" })
-        </div>
-
-        <div class="col-md-3" style="display: none;">
-            @Html.TextBoxFor(model => model.ApellidoMat, new { @class = "hidden form-control", autocomplete = "off" })
-        </div>
-
-        <div class="col-md-3" style="display: none;">
-            @Html.TextBoxFor(model => model.Sexo, new { @class = "hidden form-control", autocomplete = "off" })
-        </div>
-        
-        <div class="col-md-3">
-
-            @Html.LabelFor(model=> model.Fotografia)
-            @if (Model.Fotografia != null)
-            {
-                <img id="Img" src="data:image/*;base64,@Model.Fotografia" style="width:100% ; height:auto" />
-            }
-            else
-            {
-                <img id="Img" src="~/image/sinfoto.jpg" style="width:100% ; height:auto" />
-            }
-        </div>
 
         <div class="col-md-3">
             @Html.LabelFor(model => model.Beca.BecaList)
@@ -58,44 +36,12 @@
             </div>
 
         </div>
-
-        
-        </div>
-        <div class="row">
-        <div class="col-md-3">
-
-            @Html.LabelFor(model=> model.Fotografia)
-
-            <div class="input-group mb-3">
-                <span class="input-group-text" id="basic-addon1"><i class="bi bi-card-image"></i></span>
-                <input id="IFImagen" type='file' class="form-control" name="IFImagen" onchange="validateFile(this), readURL(this);  " />
-            </div>
-
-            @if (Model.Fotografia != null)
-            {
-                <img id="Img" src="data:image/*;base64,@Model.Fotografia" style="width:100% ; height:auto" />
-            }
-            else
-            {
-                <img id="Img" src="~/image/sinfoto.jpg" style="width:100% ; height:auto" />
-            }
-        </div>
-        @Html.HiddenFor(model => model.Fotografia)
-         <div class="col-md-2">
-            @Html.LabelFor(model => model.Sexo)
-            <br  />
-            Hombre
-            @Html.RadioButtonFor(model => model.Sexo, "H")
-            Mujer
-            @Html.RadioButtonFor(model => model.Sexo, "M")
-            @Html.ValidationMessageFor(model => model.Sexo, null, new { @class = "text-danger" })
-        </div>
-
+       
         </div>    
     <div class="form-group">
         <div class="col-md-3">
             <input type="submit" value="Guardar" class="btn btn-success" />
-            @Html.ActionLink("Regresar", "GetAll", "Alumno", htmlAttributes: new { @class = "btn btn-danger" })
+            @Html.ActionLink("Regresar", "GetAll", "BecaAlumno", htmlAttributes: new { @class = "btn btn-danger" })
         </div>
     </div>
 }
