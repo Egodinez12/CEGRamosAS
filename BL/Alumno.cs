@@ -450,9 +450,6 @@ namespace BL
                         result.Object = alumno;
                         result.Correct = true;
 
-
-                        result.Correct = true;
-
                     }
                     else
                     {

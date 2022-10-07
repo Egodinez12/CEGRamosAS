@@ -46,23 +46,21 @@ namespace PLL.Controllers
         [HttpGet]
         public ActionResult Form(int? idAlumno)
         {
-            IFormFile file = Request.Form.Files["IFImagen"];
 
-
-            
-
-            ML.Alumno alumno = new ML.Alumno();           
-            ML.Result resultBeca = BL.Beca.GetAllLINQ();
+            ML.Alumno alumno = new ML.Alumno();
+            ML.Result result1 = BL.Beca.GetAllLINQ();
             alumno.Beca = new ML.Beca();
-            alumno.Beca.BecaList = resultBeca.Objects;
+            alumno.Beca.BecaList = result1.Objects.ToList();
 
             if (idAlumno != null)
-            {
+            {                
                 ML.Result result = BL.Alumno.GetByBeca(idAlumno.Value);
                 if (result.Correct)
                 {
+
                     alumno = ((ML.Alumno)result.Object);
-                    alumno.Beca.BecaList = resultBeca.Objects;
+                    alumno.Beca = new ML.Beca();
+                    alumno.Beca.BecaList = result1.Objects.ToList();
                     
 
                     return View(alumno);
@@ -73,16 +71,33 @@ namespace PLL.Controllers
                     ViewBag.Message = " No se realizo la consulta" + result.MessangeError;
                     return View("Modal");
                 }
+
+ 
+                
             }
             else
             {
-                alumno.Beca.BecaList = resultBeca.Objects;
+                alumno.Beca.BecaList = result1.Objects.ToList();
                 return View(alumno);
             }
+            
         }
+
         [HttpPost]
         public ActionResult Form(ML.Alumno alumno)
-        {            
+        {
+
+            IFormFile file = Request.Form.Files["IFFoto"];
+
+            //valido si traigo imagen
+            if (file != null)
+            {
+                //llamar al metodo que convierte a bytes la imagen
+                byte[] ImagenBytes = ConvertToBytes(file);
+                //convierto a base 64 la imagen y la guardo en mi objeto materia
+                alumno.Fotografia = Convert.ToBase64String(ImagenBytes);
+            }
+
             ML.Result result = new ML.Result();
             ML.Result resultbeca = BL.Beca.GetAllLINQ();
             alumno.Beca = new ML.Beca();
@@ -101,7 +116,7 @@ namespace PLL.Controllers
                                                   
             alumno.Beca.BecaList = resultbeca.Objects;
                          
-            return PartialView("Modal");
+            return View(alumno);
 
         }
 
